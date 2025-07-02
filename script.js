@@ -308,4 +308,3 @@ function copyLink(sectionId) {
         }, 2000);
     });
 }
-
