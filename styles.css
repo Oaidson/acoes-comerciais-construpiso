@@ -535,3 +535,249 @@ body {
         font-size: 1.8rem;
     }
 }
+
+
+
+/* ConstruBlack Styles */
+.construblack-intro {
+    background: linear-gradient(135deg, #000000 0%, #FF3366 100%);
+}
+
+.construblack-section {
+    background: white;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.construblack-section h3 {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    color: white;
+    padding: 1.5rem;
+    margin: 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.construblack-section h3 i {
+    color: #FF3366;
+}
+
+.construblack-content {
+    padding: 2rem;
+}
+
+.construblack-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.construblack-action {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-left: 4px solid #FF3366;
+    transition: transform 0.3s ease;
+}
+
+.construblack-action:hover {
+    transform: translateX(5px);
+}
+
+.construblack-action i {
+    font-size: 1.5rem;
+    color: #FF3366;
+    width: 30px;
+    text-align: center;
+}
+
+.construblack-action span {
+    font-weight: 600;
+    color: #333;
+}
+
+.engagement-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.engagement-card {
+    background: linear-gradient(135deg, #FF3366 0%, #000000 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(255, 51, 102, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.engagement-card:hover {
+    transform: translateY(-5px);
+}
+
+.engagement-card i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #FFD700;
+}
+
+.engagement-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.engagement-card p {
+    margin-bottom: 0.5rem;
+}
+
+.engagement-card small {
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.buzz-strategy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.buzz-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe8ec 100%);
+    border-radius: 10px;
+    border-left: 5px solid #FF3366;
+}
+
+.buzz-item i {
+    font-size: 2rem;
+    color: #FF3366;
+    margin-top: 0.25rem;
+}
+
+.buzz-item h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.buzz-item p {
+    color: #666;
+    margin: 0;
+}
+
+.special-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.special-action {
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.special-action:hover {
+    transform: translateY(-3px);
+}
+
+.special-action i {
+    font-size: 2.5rem;
+    color: #FF3366;
+    margin-bottom: 1rem;
+}
+
+.special-action h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.construblack-warning {
+    background: linear-gradient(135deg, #FF6B35 0%, #FF3366 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-top: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+.construblack-warning i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #FFD700;
+}
+
+.construblack-warning p {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Responsive adjustments for ConstruBlack */
+@media (max-width: 768px) {
+    .construblack-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .engagement-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .special-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .buzz-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .buzz-item i {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .construblack-content {
+        padding: 1.5rem;
+    }
+    
+    .construblack-section h3 {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    .engagement-card {
+        padding: 1.5rem;
+    }
+    
+    .special-action {
+        padding: 1.5rem;
+    }
+    
+    .construblack-warning {
+        padding: 1.5rem;
+    }
+    
+    .construblack-warning p {
+        font-size: 1rem;
+    }
+}
+
