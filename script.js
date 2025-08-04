@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Animações de entrada para elementos
     function animateOnScroll() {
-        const elements = document.querySelectorAll('.card, .action-item, .week-item, .date-item, .strategy-card, .game-card');
+        const elements = document.querySelectorAll('.card, .meta-card, .action-item, .week-item, .departamento-card, .strategy-card, .protecao-card');
         
         elements.forEach(element => {
             const elementTop = element.getBoundingClientRect().top;
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Configurar elementos para animação
     function setupAnimations() {
-        const elements = document.querySelectorAll('.card, .action-item, .week-item, .date-item, .strategy-card, .game-card');
+        const elements = document.querySelectorAll('.card, .meta-card, .action-item, .week-item, .departamento-card, .strategy-card, .protecao-card');
         
         elements.forEach(element => {
             element.style.opacity = '0';
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Escutar scroll para animações
     window.addEventListener('scroll', animateOnScroll);
     
-    // Funcionalidade de busca rápida (opcional)
+    // Funcionalidade de busca rápida
     function addSearchFunctionality() {
         // Criar campo de busca
         const searchContainer = document.createElement('div');
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adicionar botão de impressão
     addPrintButton();
     
-    // Funcionalidade de modo escuro (opcional)
+    // Funcionalidade de modo escuro
     function addDarkModeToggle() {
         const darkModeButton = document.createElement('button');
         darkModeButton.innerHTML = '<i class="fas fa-moon"></i>';
@@ -216,40 +216,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         document.body.appendChild(darkModeButton);
-        
-        // Estilos para modo escuro
-        const darkModeStyles = document.createElement('style');
-        darkModeStyles.textContent = `
-            .dark-mode {
-                background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-                color: #fff;
-            }
-            .dark-mode .content-section h2 {
-                color: #FF6B35;
-            }
-            .dark-mode .action-item,
-            .dark-mode .week-content,
-            .dark-mode .date-item,
-            .dark-mode .strategy-card {
-                background: #333;
-                color: #fff;
-            }
-            .dark-mode .navigation {
-                background: #2d2d2d;
-            }
-            .dark-mode .nav-tab {
-                color: #ccc;
-            }
-            .dark-mode .nav-tab:hover {
-                background: #444;
-                color: #FF6B35;
-            }
-            .dark-mode .nav-tab.active {
-                color: #FF6B35;
-                background: #444;
-            }
-        `;
-        document.head.appendChild(darkModeStyles);
     }
     
     // Adicionar toggle de modo escuro
@@ -280,16 +246,55 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Adicionar barra de progresso de leitura
     addReadingProgress();
-});
-
-// Função para copiar link da seção
-function copyLink(sectionId) {
-    const url = window.location.origin + window.location.pathname + '#' + sectionId;
-    navigator.clipboard.writeText(url).then(function() {
-        // Mostrar feedback visual
-        const feedback = document.createElement('div');
-        feedback.textContent = 'Link copiado!';
-        feedback.style.cssText = `
+    
+    // Funcionalidade de compartilhamento
+    function addShareButtons() {
+        const shareContainer = document.createElement('div');
+        shareContainer.style.cssText = `
+            position: fixed;
+            bottom: 160px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        `;
+        
+        // Botão de copiar link
+        const copyButton = document.createElement('button');
+        copyButton.innerHTML = '<i class="fas fa-link"></i>';
+        copyButton.title = 'Copiar link';
+        copyButton.style.cssText = `
+            background: #0066FF;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+            transition: transform 0.3s ease;
+        `;
+        
+        copyButton.addEventListener('click', function() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                showNotification('Link copiado!');
+            });
+        });
+        
+        shareContainer.appendChild(copyButton);
+        document.body.appendChild(shareContainer);
+    }
+    
+    // Adicionar botões de compartilhamento
+    addShareButtons();
+    
+    // Função para mostrar notificações
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.cssText = `
             position: fixed;
             top: 50%;
             left: 50%;
@@ -300,11 +305,232 @@ function copyLink(sectionId) {
             border-radius: 10px;
             z-index: 1002;
             font-weight: bold;
+            box-shadow: 0 4px 15px rgba(50, 205, 50, 0.3);
         `;
-        document.body.appendChild(feedback);
+        document.body.appendChild(notification);
         
         setTimeout(() => {
-            document.body.removeChild(feedback);
+            document.body.removeChild(notification);
         }, 2000);
+    }
+    
+    // Funcionalidade de estatísticas em tempo real
+    function addStatsCounter() {
+        const statsElements = document.querySelectorAll('.valor, .margem-numero, .porcentagem');
+        
+        function animateNumber(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                if (element.textContent.includes('R$')) {
+                    element.textContent = `R$ ${Math.floor(current).toLocaleString('pt-BR')}`;
+                } else if (element.textContent.includes('%')) {
+                    element.textContent = `${current.toFixed(1)}%`;
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+        
+        // Observar quando os elementos entram na tela
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const text = element.textContent;
+                    
+                    if (text.includes('3.550.000')) {
+                        animateNumber(element, 3550000);
+                    } else if (text.includes('2.000.000')) {
+                        animateNumber(element, 2000000);
+                    } else if (text.includes('1.550.000')) {
+                        animateNumber(element, 1550000);
+                    } else if (text.includes('28,50')) {
+                        animateNumber(element, 28.5);
+                    } else if (text.includes('70')) {
+                        animateNumber(element, 70);
+                    } else if (text.includes('30')) {
+                        animateNumber(element, 30);
+                    }
+                    
+                    observer.unobserve(element);
+                }
+            });
+        });
+        
+        statsElements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+    
+    // Adicionar contador de estatísticas
+    addStatsCounter();
+    
+    // Funcionalidade de favoritos
+    function addFavoriteButton() {
+        const favoriteButton = document.createElement('button');
+        favoriteButton.innerHTML = '<i class="fas fa-heart"></i>';
+        favoriteButton.title = 'Adicionar aos favoritos';
+        favoriteButton.style.cssText = `
+            position: fixed;
+            bottom: 230px;
+            right: 20px;
+            background: #FF3366;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        `;
+        
+        favoriteButton.addEventListener('click', function() {
+            const isFavorited = this.classList.contains('favorited');
+            
+            if (isFavorited) {
+                this.innerHTML = '<i class="fas fa-heart"></i>';
+                this.classList.remove('favorited');
+                showNotification('Removido dos favoritos');
+            } else {
+                this.innerHTML = '<i class="fas fa-heart" style="color: #FFD700;"></i>';
+                this.classList.add('favorited');
+                showNotification('Adicionado aos favoritos!');
+            }
+        });
+        
+        document.body.appendChild(favoriteButton);
+    }
+    
+    // Adicionar botão de favoritos
+    addFavoriteButton();
+    
+    // Adicionar efeitos de hover melhorados
+    function enhanceHoverEffects() {
+        const cards = document.querySelectorAll('.card, .meta-card, .action-item, .strategy-card, .departamento-card, .protecao-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+                this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    }
+    
+    // Aplicar efeitos de hover melhorados
+    enhanceHoverEffects();
+});
+
+// Função para copiar link da seção
+function copyLink(sectionId) {
+    const url = window.location.origin + window.location.pathname + '#' + sectionId;
+    navigator.clipboard.writeText(url).then(function() {
+        showNotification('Link da seção copiado!');
     });
 }
+
+// Função para exportar dados (simulação)
+function exportData() {
+    const data = {
+        meta_total: 'R$ 3.550.000',
+        meta_tiangua: 'R$ 2.000.000',
+        meta_sobral: 'R$ 1.550.000',
+        margem_objetivo: '28,50%',
+        crescimento: '20%',
+        acoes_principais: 10,
+        semanas: 4,
+        data_export: new Date().toLocaleDateString('pt-BR')
+    };
+    
+    const dataStr = JSON.stringify(data, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'construpiso-acoes-agosto-2025.json';
+    link.click();
+    
+    URL.revokeObjectURL(url);
+    showNotification('Dados exportados com sucesso!');
+}
+
+// Adicionar funcionalidade de teclado
+document.addEventListener('keydown', function(e) {
+    // Navegação por teclado
+    if (e.ctrlKey || e.metaKey) {
+        switch(e.key) {
+            case '1':
+                e.preventDefault();
+                document.querySelector('[data-section="visao-geral"]').click();
+                break;
+            case '2':
+                e.preventDefault();
+                document.querySelector('[data-section="acoes-estrategicas"]').click();
+                break;
+            case '3':
+                e.preventDefault();
+                document.querySelector('[data-section="cronograma"]').click();
+                break;
+            case '4':
+                e.preventDefault();
+                document.querySelector('[data-section="focos-departamentais"]').click();
+                break;
+            case '5':
+                e.preventDefault();
+                document.querySelector('[data-section="crm-marketing"]').click();
+                break;
+            case '6':
+                e.preventDefault();
+                document.querySelector('[data-section="protecao-margem"]').click();
+                break;
+            case 'p':
+                e.preventDefault();
+                window.print();
+                break;
+        }
+    }
+});
+
+// Função para mostrar notificações
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #32CD32;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        z-index: 1002;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(50, 205, 50, 0.3);
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+        }
+    }, 2000);
+}
+
